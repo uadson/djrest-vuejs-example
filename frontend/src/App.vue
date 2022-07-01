@@ -18,7 +18,7 @@ export default {
 
   data() {
     return {
-      logo_src: '/img/logo.png',
+      logo_src: './assets/img/logo.png',
       alt: 'Make Your Burger',
     }
   }
