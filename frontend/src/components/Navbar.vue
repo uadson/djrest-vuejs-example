@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
  #nav {
   background-color: #222;
   border-bottom: 4px solid #111;
