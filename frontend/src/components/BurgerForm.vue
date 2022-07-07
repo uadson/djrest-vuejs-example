@@ -11,7 +11,9 @@
                     <label for="bread">Escolha o pão:</label>
                     <select name="breads" id="breads" v-model="breads">
                         <option value="">Selecione o tipo de pão</option>
-                        <option value="">------------------</option>
+                        <option v-for="bread in breads" :key="bread.id" :value="bread.name">
+                            {{ bread.name }}
+                        </option>
                     </select>                    
                 </div>
                 <div class="input-container">
@@ -37,8 +39,39 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'BurgerForm',
+
+    data() {
+        return {
+            breads: null,
+            /*
+            meats: null,
+            optionaldata: null,
+            name: null,
+            bread: null,
+            meat: null,
+            optional: null,
+            status: null,
+            msg: null
+            */
+        }
+    },
+
+    mounted() {
+        this.getBreads();
+    },
+
+    methods: {
+        async getBreads() {
+            axios ({
+                method: 'GET',
+                url: 'http://127.0.0.1:8000/api/app/v1/breads/',
+            }).then(response => this.breads = response.data)
+        }
+    }
 }
 </script>
 
