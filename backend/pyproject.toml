@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "Make Your Burger"
+version = "0.1.0"
+description = "Form to create gourmet burger"
+authors = ["Uadson Emile <uadsonpy@gmail.com>"]
+license = "MIT License"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+djangorestframework = "^3.13.1"
+django-cors-headers = "^3.13.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
