@@ -11,7 +11,7 @@
                     <label for="bread">Escolha o pão:</label>
                     <select name="breads" id="breads" v-model="breads">
                         <option value="">Selecione o tipo de pão</option>
-                        <option v-for="bread in breads" :key="bread.id" :value="bread.name">
+                        <option v-for="bread in APIData" :key="bread.id" :value="bread.name">
                             {{ bread.name }}
                         </option>
                     </select>                    
@@ -39,39 +39,58 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { getAPI } from '../axios-api'
 
 export default {
     name: 'BurgerForm',
 
     data() {
         return {
-            breads: null,
-            /*
-            meats: null,
-            optionaldata: null,
-            name: null,
-            bread: null,
-            meat: null,
-            optional: null,
-            status: null,
-            msg: null
-            */
+            APIData: []
         }
     },
 
-    mounted() {
-        this.getBreads();
-    },
-
-    methods: {
-        async getBreads() {
-            axios ({
-                method: 'GET',
-                url: 'http://127.0.0.1:8000/api/app/v1/breads/',
-            }).then(response => this.breads = response.data)
-        }
+    created() {
+        getAPI.get('/breads/',)
+            .then(response => {
+                console.log('Breads API has recieved data')
+                this.APIData = response.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
+
+    // data() {
+    //     return {
+    //         breads: null,
+    //         /*
+    //         meats: null,
+    //         optionaldata: null,
+    //         name: null,
+    //         bread: null,
+    //         meat: null,
+    //         optional: null,
+    //         status: null,
+    //         msg: null
+    //         */
+    //     }
+    // },
+
+    // mounted() {
+    //     this.getBreads();
+    // },
+
+    // methods: {
+    //     // First Idea
+    //     async getBreads() {
+    //         axios ({
+    //             method: 'GET',
+    //             url: 'http://127.0.0.1:8000/api/app/v1/breads/',
+    //         }).then(response => this.breads = response.data)
+    //     }
+
+    // }
 }
 </script>
 
