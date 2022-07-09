@@ -4,6 +4,6 @@ from api.models.meats import Meat
 from api.serializers.meats_serializer import MeatSerializer
 
 
-class MeatViewset(viewsets.ModelViewSet):
+class MeatsViewset(viewsets.ModelViewSet):
     queryset = Meat.objects.all()
     serializer_class = MeatSerializer
