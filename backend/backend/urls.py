@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from api.routers import routers
+from api.urls.routers import router
 
 
 urlpatterns = [
@@ -9,5 +9,5 @@ urlpatterns = [
 
     path('api/auth/', include('rest_framework.urls')),
 
-    path('api/app/v1/', include(routers.router.urls)),
+    path('api/app/v1/', include(router.urls)),
 ]
