@@ -11,7 +11,7 @@
                     <label for="bread">Escolha o pão:</label>
                     <select name="breads" id="breads" v-model="breads">
                         <option value="">Selecione o tipo de pão</option>
-                        <option v-for="bread in APIData" :key="bread.id" :value="bread.name">
+                        <option v-for="bread in BreadsAPIData" :key="bread.id" :value="bread.name">
                             {{ bread.name }}
                         </option>
                     </select>                    
@@ -20,7 +20,9 @@
                     <label for="meat">Escolha o carne do seu burger:</label>
                     <select name="meats" id="meats" v-model="meats">
                         <option value="">Selecione o tipo de carne</option>
-                        <option value="">------------------</option>
+                        <option v-for="meat in MeatsAPIData" :key="meat.id" :value="meat.name">
+                            {{ meat.name }}
+                        </option>
                     </select>                    
                 </div>
                <div id="optional-container" class="input-container">
@@ -46,7 +48,8 @@ export default {
 
     data() {
         return {
-            APIData: []
+            BreadsAPIData: [],
+            MeatsAPIData: [],
         }
     },
 
@@ -54,7 +57,16 @@ export default {
         getAPI.get('/breads/',)
             .then(response => {
                 console.log('Breads API has recieved data')
-                this.APIData = response.data
+                this.BreadsAPIData = response.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        getAPI.get('/meats/',)
+            .then(response => {
+                console.log('Meats API has recieved data')
+                this.MeatsAPIData = response.data
             })
             .catch(err => {
                 console.log(err)
