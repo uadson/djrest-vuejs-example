@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from api.models.order import Order
+from api.models.orders import Order
 from api.serializers.orders_serializer import OrderSerializer
 
 
