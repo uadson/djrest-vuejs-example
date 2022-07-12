@@ -27,9 +27,9 @@
                 </div>
                <div id="optional-container" class="input-container">
                     <label id="optional-title" for="optional">Selecione os opcionais:</label>
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="optional" v-model="optional" value="tipo de opcional">
-                        <span>Tipo de opcional</span>
+                    <div class="checkbox-container" v-for="option in OptionsAPIData" :key="option.id">
+                        <input type="checkbox" name="options" v-model="options" :value="option.name">
+                        <span>{{ option.name }}</span>
                     </div>                  
                 </div>
                 <div class="input-container">
@@ -50,6 +50,7 @@ export default {
         return {
             BreadsAPIData: [],
             MeatsAPIData: [],
+            OptionsAPIData: [],
         }
     },
 
@@ -67,6 +68,15 @@ export default {
             .then(response => {
                 console.log('Meats API has recieved data')
                 this.MeatsAPIData = response.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        getAPI.get('/options/',)
+            .then(response => {
+                console.log('Options API has recieved data')
+                this.OptionsAPIData = response.data
             })
             .catch(err => {
                 console.log(err)
