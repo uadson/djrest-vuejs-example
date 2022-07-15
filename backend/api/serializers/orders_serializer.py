@@ -11,5 +11,8 @@ class OrderSerializer(serializers.ModelSerializer):
             'customer',
             'bread',
             'meat',
+            'options',
             'status',
+            'created',
+            'updated',
         )
