@@ -1,19 +1,20 @@
 from django.contrib import admin
 
-from api.models.breads import Bread
+from api.models.options import Option
 
 from datetime import datetime
 
 
-@admin.register(Bread)
-class BreadAdmin(admin.ModelAdmin):
+@admin.register(Option)
+class OptionAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'name',
         '_created',
         '_updated',
-        'active',
+        'active'
     )
+
     exclude = ['created', 'updated', ]
 
     def _created(self, instance):

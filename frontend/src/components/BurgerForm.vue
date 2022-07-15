@@ -2,33 +2,33 @@
     <div>
         <p>Componente de Mensagem</p>
         <div>
-            <form id="burger-form">
+            <form id="burger-form" @submit.prevent="addBurger">
                 <div class="input-container">
                     <label for="name">Cliente:</label>
-                    <input type="text" id="name" name="name" v-model="name" placeholder="Digite seu nome">
+                    <input type="text" id="name" name="name" v-model="form.customer" placeholder="Digite seu nome" required>
                 </div>
                 <div class="input-container">
                     <label for="bread">Escolha o pão:</label>
-                    <select name="breads" id="breads" v-model="breads">
+                    <select name="breads" id="breads" v-model="form.bread">
                         <option value="">Selecione o tipo de pão</option>
-                        <option v-for="bread in BreadsAPIData" :key="bread.id" :value="bread.name">
+                        <option v-for="bread in breadsAPIData" :key="bread.id" :value="bread.id">
                             {{ bread.name }}
                         </option>
                     </select>                    
                 </div>
                 <div class="input-container">
                     <label for="meat">Escolha o carne do seu burger:</label>
-                    <select name="meats" id="meats" v-model="meats">
+                    <select name="meats" id="meats" v-model="form.meat">
                         <option value="">Selecione o tipo de carne</option>
-                        <option v-for="meat in MeatsAPIData" :key="meat.id" :value="meat.name">
+                        <option v-for="meat in meatsAPIData" :key="meat.id" :value="meat.id">
                             {{ meat.name }}
                         </option>
                     </select>                    
                 </div>
                <div id="optional-container" class="input-container">
                     <label id="optional-title" for="optional">Selecione os opcionais:</label>
-                    <div class="checkbox-container" v-for="option in OptionsAPIData" :key="option.id">
-                        <input type="checkbox" name="options" v-model="options" :value="option.name">
+                    <div class="checkbox-container" v-for="option in optionsAPIData" :key="option.id">
+                        <input type="checkbox" name="options" v-model="form.options" :value="option.id">
                         <span>{{ option.name }}</span>
                     </div>                  
                 </div>
@@ -41,78 +41,74 @@
 </template>
 
 <script>
-import { getAPI } from '../axios-api'
+import api from '@/services/api.js'
 
 export default {
     name: 'BurgerForm',
 
-    data() {
-        return {
-            BreadsAPIData: [],
-            MeatsAPIData: [],
-            OptionsAPIData: [],
+    data(){
+        return{
+            // Get API Data
+            breadsAPIData: [],
+            meatsAPIData: [],
+            optionsAPIData: [],
+           
+
+            // Post Form API Data
+            form: {
+                customer: '',
+                bread: '',
+                meat: '',
+                options: [],
+            }
         }
     },
 
-    created() {
-        getAPI.get('/breads/',)
+    mounted(){
+        // Breads
+        api.get('/breads/',)
             .then(response => {
-                console.log('Breads API has recieved data')
-                this.BreadsAPIData = response.data
+                console.log('Breads api data received')
+                this.breadsAPIData = response.data
             })
             .catch(err => {
                 console.log(err)
             })
 
-        getAPI.get('/meats/',)
+        // Meats
+        api.get('/meats/',)
             .then(response => {
-                console.log('Meats API has recieved data')
-                this.MeatsAPIData = response.data
+                console.log('Meats api data received')
+                this.meatsAPIData = response.data
             })
             .catch(err => {
                 console.log(err)
             })
 
-        getAPI.get('/options/',)
+        // Optional
+        api.get('/options/',)
             .then(response => {
-                console.log('Options API has recieved data')
-                this.OptionsAPIData = response.data
+                console.log('Optional api data received')
+                this.optionsAPIData = response.data
             })
             .catch(err => {
                 console.log(err)
             })
+    },
+    methods:{
+        addBurger(){
+            api.post('/orders/', this.form)
+            .then(response => {
+                console.log(response.status)
+                console.log('Burger created with success')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            
+        }
     }
 
-    // data() {
-    //     return {
-    //         breads: null,
-    //         /*
-    //         meats: null,
-    //         optionaldata: null,
-    //         name: null,
-    //         bread: null,
-    //         meat: null,
-    //         optional: null,
-    //         status: null,
-    //         msg: null
-    //         */
-    //     }
-    // },
-
-    // mounted() {
-    //     this.getBreads();
-    // },
-
-    // methods: {
-    //     // First Idea
-    //     async getBreads() {
-    //         axios ({
-    //             method: 'GET',
-    //             url: 'http://127.0.0.1:8000/api/app/v1/breads/',
-    //         }).then(response => this.breads = response.data)
-    //     }
-
-    // }
 }
 </script>
 
