@@ -105,6 +105,15 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+
+            // send message
+
+
+            // clean message
+
+
+            // clean form
+            this.form = ''
             
         }
     }
