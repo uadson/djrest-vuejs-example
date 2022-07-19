@@ -27,10 +27,5 @@ class Order(Base):
         verbose_name_plural = 'Orders'
         db_table = 'order'
 
-    def save(self, *args, **kwargs):
-        self.created = self.created.datetime.strftime('%d/%m/%Y, %H:%M h')
-        self.updated = self.updated.datetime.strftime('%d/%m/%Y, %H:%M h')
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return f'Order n.: {self.id}'
